@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8"/>
+
+<style>
+    .correct {
+      background-color: green;
+    }
+
+    .wrong {
+      background-color: red;
+    }
+   </style>
+</head>
+
+<body>
+
+    <form name="quizlist">
+        <div id='quiz'></div>
+        <button type="button" id='submit'>Get Results</button>
+
+        <div id='results'>
+
+        </div>
+    </form>
+
+
+    <script type="text/javascript">
+
+    let myQuestions = [{
+
+        question: "What does HTML stand for?",
+        answers: {
+            a: 'HyperText Markup Language',
+            b: 'HyperText Makeup Language',
+            c: 'Hypertext Marking Language',
+            d: 'HyperText Mark Language'
+        },
+        correctAnswer: 'HyperText Markup Language'
+    },
+    {
+        question: "What is the difference between scripting language and programming language?",
+        answers: {
+            a: 'Scripting language is complied whereas programming language is interpreted',
+            b: 'Scripting language is compiled whereas programming language is also compiled',
+            c: 'Programming language is interpreted whereas scripting language is also interpreted',
+            d: 'Scripting language is interpreted but programming language is compiled'
+        },
+        correctAnswer: 'Scripting language is interpreted but programming language is compiled'
+    },
+    {
+        question: "What is the purpose of TCP/IP?",
+        answers: {
+            a: 'To allow computers to communicate over long distances',
+            b: 'Used to send, receive or relay out mail between the receiver and sender',
+            c: 'Used to receive emails from a remote server to a clients email, and can allow you to read the emails even when offline',
+            d: 'To exchange data and program files across a network'
+        },
+        correctAnswer: 'To allow computers to communicate over long distances'
+    },
+    {
+        question: "Out of the four concepts of OOP, which one hides the properties and behaviours of an object?",
+        answers: {
+            a: 'Encapsulation',
+            b: 'Polymorphism',
+            c: 'Abstraction',
+            d: 'Inheritance'
+        },
+        correctAnswer: 'Encapsulation'
+    },
+];
+
+
+//create a library to hold the questions and answers and turn them into an array
+
+const library = Object.entries(myQuestions);
+
+//grab the ids and create a container to hold each one
+
+let quizContainer = document.getElementById('quiz');
+let submitButton = document.getElementById('submit');
+let resultsContainer = document.getElementById('results');
+
+
+
+
+//Generate the quiz onto the page
+
+let qlist = library.map(question => {
+
+    let answers = question[1].answers;
+    let answerset = Object.entries(answers);
+    var choices = answerset.map(function(choice) {
+        return '<div class="quizz-row"><input type="radio" value="' + choice[1] + '" name="questions' + library.indexOf(question) + '"><label>' + choice[1] + '</label></div>';
+    }).join('');
+
+    let questions = '<fieldset id="questions' + library.indexOf(question) + '" ><p>' + question[1].question; '</p> '
+
+        return questions + choices + '</fieldset>'
+
+    }).join('');
+
+
+        //generate the quiz onto the page 
+
+    quizContainer.innerHTML = qlist;
+
+
+
+        //create a function to check the answers
+    function CheckAnswer() {
+        let score = 0;
+
+    library.forEach((check) => {
+        let form = document.forms.quizlist;
+        let fieldName= 'questions' + library.indexOf(check);
+        let el= form.elements[fieldName].value;      
+        let questions = check[1].correctAnswer;
+
+
+        let qrow = document.getElementById('questions' + library.indexOf(check));
+
+        if(el == questions) {
+            qrow.className="";
+            qrow.classList.add('correct');
+            score++;
+        
+        }else {
+            qrow.className="";
+            qrow.classList.add('wrong');
+        }
+    });
+
+
+
+
+}
+
+        submitButton.addEventListener('click', CheckAnswer);
+
+    </script>
+    </body>
+
+    </html>
+
+
+                
+            
+
+
+
+
+
+
+
+
+
+
+
+            
+        
+
+
